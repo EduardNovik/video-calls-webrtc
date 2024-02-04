@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { MeetState, MeetStoreState } from "#models/care-journey-types";
+import type { MeetState, MeetStoreState } from "../models/types";
 
 export const useMeetStore = create<MeetStoreState>((set) => {
   const storedMeetState = localStorage.getItem("meetState");
