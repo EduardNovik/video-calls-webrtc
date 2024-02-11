@@ -1,7 +1,6 @@
-import type { HTMLVideoElement } from "happy-dom";
-
+"use client";
 import { useMeetStore } from "../store/meet-store";
-import { database } from "#utils/firebase.js";
+import { database } from "../firebase/firebase";
 
 const servers = {
   iceServers: [
@@ -11,13 +10,18 @@ const servers = {
   ],
   iceCandidatePoolSize: 10,
 };
-const pc = new RTCPeerConnection(servers);
+
+let pc: RTCPeerConnection;
+
+if (typeof window !== "undefined" && window.RTCPeerConnection) {
+  pc = new window.RTCPeerConnection(servers);
+}
 
 export const closeMeeting = () => {
   pc.close();
 };
 
-export const createMeetingId = async () => {
+export const createMeetingId = () => {
   return database.collection("meetings").doc().id;
 };
 
