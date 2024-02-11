@@ -2,8 +2,6 @@
 import { useMeetStore } from "../store/meet-store";
 import { database } from "../firebase/firebase";
 
-if (typeof window !== "undefined" && window.RTCPeerConnection) {
-}
 const servers = {
   iceServers: [
     {
@@ -23,7 +21,7 @@ export const closeMeeting = () => {
   pc.close();
 };
 
-export const createMeetingId = async () => {
+export const createMeetingId = () => {
   return database.collection("meetings").doc().id;
 };
 
