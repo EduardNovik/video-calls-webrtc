@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.custom-bg {
+  background-image: url("../src/app/assets/bg-1.jpg");
+}
+.custom-bg-dark {
+  background-image: url("../src/app/assets/bg-2.jpg");
+}
