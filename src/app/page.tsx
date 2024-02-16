@@ -44,7 +44,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col p-10 items-center custom-bg object-scale-down dark:custom-bg-dark ">
+    <main className="min-h-screen flex flex-col p-10 items-center custom-bg object-scale-down  ">
       <div className="flex justify-end w-full">
         <ThemeSwitcher />
       </div>
