@@ -8,6 +8,9 @@ dependencies:
   '@nextui-org/react':
     specifier: ^2.2.9
     version: 2.2.9(@types/react@18.2.55)(framer-motion@11.0.3)(react-dom@18.2.0)(react@18.2.0)(tailwind-variants@0.2.0)(tailwindcss@3.4.1)
+  clsx:
+    specifier: ~2.1.0
+    version: 2.1.0
   firebase:
     specifier: 10.7.1
     version: 10.7.1
@@ -26,6 +29,9 @@ dependencies:
   react-dom:
     specifier: ^18
     version: 18.2.0(react@18.2.0)
+  tailwind-merge:
+    specifier: ~2.2.0
+    version: 2.2.1
   zustand:
     specifier: 4.5.0
     version: 4.5.0(@types/react@18.2.55)(react@18.2.0)
