@@ -14,12 +14,11 @@ export default function Home() {
   const { theme } = useTheme();
   const [inputData, setInputData] = useState("");
   const { createMeetingId, createMeeting } = useWebRTC();
-  const { updateMeetState } = useMeetStore();
+  const { state, updateMeetState } = useMeetStore();
   const router = useRouter();
 
   const createMeetingHandler = async () => {
     const createdMeetingId = createMeetingId();
-    console.log(createdMeetingId);
 
     updateMeetState({
       meetId: createdMeetingId,
@@ -27,10 +26,12 @@ export default function Home() {
       isHost: true,
       isWaiting: true,
     });
+    console.log(state.meetId);
 
     await createMeeting();
-
     router.push("/on-call");
+
+    console.log("passed");
   };
 
   const joinMeetingHandler = async () => {
