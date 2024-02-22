@@ -6,31 +6,27 @@ import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { useState } from "react";
-import { ThemeSwitcher } from "./components/theme-switcher";
+// import { ThemeSwitcher } from "./components/theme-switcher";
 import { useTheme } from "next-themes";
 import { cn } from "./lib/cn";
 
 export default function Home() {
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
   const [inputData, setInputData] = useState("");
-  const { createMeetingId, createMeeting } = useWebRTC();
-  const { state, updateMeetState } = useMeetStore();
+  const { createMeetingId, createMeeting, joinMeeting } = useWebRTC();
+  const { updateMeetState } = useMeetStore();
   const router = useRouter();
 
   const createMeetingHandler = async () => {
     const createdMeetingId = createMeetingId();
-
     updateMeetState({
       meetId: createdMeetingId,
       isCallActive: true,
       isHost: true,
       isWaiting: true,
     });
-    console.log(state.meetId);
-
     await createMeeting();
     router.push("/on-call");
-
     console.log("passed");
   };
 
@@ -41,20 +37,12 @@ export default function Home() {
       isHost: true,
       isWaiting: true,
     });
+    await joinMeeting();
     await router.push("/on-call");
-
-    await createMeeting();
   };
 
   return (
-    <main
-      className={`min-h-screen flex flex-col p-10 items-center object-scale-down ${
-        theme === "dark" ? " custom-bg-dark" : "custom-bg"
-      }`}
-    >
-      <div className="flex justify-end w-full">
-        <ThemeSwitcher />
-      </div>
+    <>
       <h1 className="text-6xl text-slate-800 my-20 drop-shadow-xl dark:text-white">
         Video Calls
       </h1>
@@ -94,6 +82,6 @@ export default function Home() {
       >
         Join Call
       </Button>
-    </main>
+    </>
   );
 }
