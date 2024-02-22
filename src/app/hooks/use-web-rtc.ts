@@ -106,6 +106,7 @@ export const useWebRTC = () => {
 
   const createMeeting = async () => {
     await userVideoCamPermission();
+
     const meetDocument = database.collection("meetings").doc(state.meetId);
     const offerCandidates = meetDocument.collection("offerCandidates");
     const answerCandidates = meetDocument.collection("answerCandidates");
@@ -122,6 +123,8 @@ export const useWebRTC = () => {
       type: offerDescription.type,
     };
 
+    console.log("Creating meeting");
+    console.log(meetDocument);
     await meetDocument.set({ offer });
 
     meetDocument.onSnapshot((snapshot) => {
