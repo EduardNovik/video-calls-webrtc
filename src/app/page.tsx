@@ -35,7 +35,7 @@ export default function Home() {
       isHost: true,
       isWaiting: true,
     });
-    await joinMeeting();
+    await joinMeeting(inputData);
     await router.push("/on-call");
   };
 

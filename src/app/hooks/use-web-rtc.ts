@@ -147,12 +147,9 @@ export const useWebRTC = () => {
     });
   };
 
-  const joinMeeting = async () => {
+  const joinMeeting = async (id: string) => {
     await userVideoCamPermission();
-    console.log(state.meetId, "ssss");
-    const meetDocument = database.collection("meetings").doc(state.meetId);
-    console.log("Joining meeting");
-
+    const meetDocument = database.collection("meetings").doc(id);
     const answerCandidates = meetDocument.collection("answerCandidates");
     const offerCandidates = meetDocument.collection("offerCandidates");
 
