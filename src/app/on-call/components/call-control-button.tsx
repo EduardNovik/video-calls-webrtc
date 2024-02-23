@@ -35,7 +35,7 @@ export const CallControlButton = (props: MeetControlButtonProps) => {
         }
       }}
       className={cn(
-        `border-none h-14 p-0 cursor-pointer rounded-full bg-transparent text-white transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-[#9353d3] focus-visible:border-black focus-visible:outline-black ${customStyles}`,
+        `border-none min-w-unit-15 h-14 p-0 cursor-pointer rounded-full bg-transparent text-white transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-[#9353d3] focus-visible:border-black focus-visible:outline-black ${customStyles}`,
         state[stateField]
           ? "focus-visible:bg-transparent"
           : "bg-red-800 focus-visible:bg-red-800"

@@ -6,12 +6,9 @@ import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { useState } from "react";
-// import { ThemeSwitcher } from "./components/theme-switcher";
-import { useTheme } from "next-themes";
 import { cn } from "./lib/cn";
 
 export default function Home() {
-  // const { theme } = useTheme();
   const [inputData, setInputData] = useState("");
   const { createMeetingId, createMeeting, joinMeeting } = useWebRTC();
   const { updateMeetState } = useMeetStore();
@@ -19,13 +16,14 @@ export default function Home() {
 
   const createMeetingHandler = async () => {
     const createdMeetingId = createMeetingId();
+
     updateMeetState({
       meetId: createdMeetingId,
       isCallActive: true,
       isHost: true,
       isWaiting: true,
     });
-    await createMeeting();
+    await createMeeting(createdMeetingId);
     router.push("/on-call");
     console.log("passed");
   };

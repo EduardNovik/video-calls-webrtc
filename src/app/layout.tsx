@@ -4,19 +4,23 @@ import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import { ThemeSwitcher } from "./components/theme-switcher";
 import { cn } from "./lib/cn";
+import { useTheme } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const { theme } = useTheme();
+  console.log(theme);
+
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           <main
             className={cn(
-              "min-h-screen flex flex-col p-10 items-center custom-bg   dark:custom-bg-dark"
+              "min-h-screen flex flex-col p-10 items-center bg-[url('/bg-1.png')] dark:bg-[url('/bg-1-invert.png')]"
             )}
           >
             <div className="flex justify-end w-full">
