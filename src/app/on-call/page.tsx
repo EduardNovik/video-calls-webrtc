@@ -7,6 +7,7 @@ import { useMeetStore } from "../store/meet-store";
 import { useWebRTC } from "../hooks/use-web-rtc";
 import { CallControlButtons } from "./components/call-control-buttons";
 import { useRouter } from "next/navigation";
+import { Button } from "@nextui-org/button";
 
 const OnCall = () => {
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
@@ -14,7 +15,7 @@ const OnCall = () => {
   const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
   const { state, updateMeetState } = useMeetStore();
   const screenShareRef = useRef<HTMLVideoElement | null>(null);
-  const { shareScreen } = useWebRTC();
+  const { shareScreen, closeMeeting } = useWebRTC();
   const router = useRouter();
 
   useEffect(() => {
@@ -40,18 +41,6 @@ const OnCall = () => {
     }
   }, [state.isCameraOn, state.isMicOn]);
 
-  const onHoldToggleHandler = () => {
-    updateMeetState({
-      isOnHold: !state.isOnHold,
-    });
-    if (localVideoRef.current) {
-      const stream = localVideoRef.current.srcObject as MediaStream;
-      for (const track of stream.getTracks()) {
-        track.enabled = state.isOnHold;
-      }
-    }
-  };
-
   const hangUpHandler = () => {
     updateMeetState({
       isCallActive: false,
@@ -71,9 +60,17 @@ const OnCall = () => {
     }
   };
 
+  const handleCopyClick = () => {
+    navigator.clipboard.writeText(state.meetId);
+    alert("Text copied to clipboard!");
+  };
+
   return (
-    <div className="h-full w-full pt-20">
-      <div className="relative flex 2xl:justify-center" ref={videoContainerRef}>
+    <div className="h-full w-full pt-20 gap-8">
+      <div
+        className="relative flex 2xl:justify-center mb-4"
+        ref={videoContainerRef}
+      >
         <video
           disablePictureInPicture
           className={cn(
@@ -98,14 +95,14 @@ const OnCall = () => {
         />
         <video
           className={cn(
-            "absolute bottom-0 right-0 h-60 w-96 rounded-md",
+            "absolute left-2 top-24 w-36 lg:top-40 lg:w-60 rounded-md  aspect-video",
             state.isPresenting && " border-[1px] border-[#9353d3]"
           )}
           autoPlay
           playsInline
           ref={screenShareRef}
         />
-        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 transform gap-4">
+        <div className="w-full bottom-[-200px] absolute sm:bottom-4 left-1/2 flex justify-center flex-wrap -translate-x-1/2 transform gap-4">
           <CallControlButtons
             ref={videoContainerRef}
             videoStreamToggleHandler={() =>
@@ -115,11 +112,17 @@ const OnCall = () => {
               updateMeetState({ isMicOn: !state.isMicOn })
             }
             hangUpHandler={hangUpHandler}
-            onHoldToggleHandler={onHoldToggleHandler}
             shareDesktop={shareDesktop}
           />
         </div>
       </div>
+      <Button
+        onClick={handleCopyClick}
+        className="w-fit mb-8 bg-[#9353d3] hover:-translate-y-1 hover:scale-105 hover:bg-red-800 text-white text-md"
+        variant="shadow"
+      >
+        Copy Call ID
+      </Button>
     </div>
   );
 };

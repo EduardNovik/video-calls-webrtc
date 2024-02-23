@@ -17,16 +17,16 @@ if (typeof window !== "undefined" && window.RTCPeerConnection) {
   pc = new window.RTCPeerConnection(servers);
 }
 
-export const closeMeeting = () => {
-  pc.close();
-};
-
-export const createMeetingId = () => {
-  return database.collection("meetings").doc().id;
-};
-
 export const useWebRTC = () => {
   const { state, updateMeetState } = useMeetStore();
+
+  const closeMeeting = () => {
+    pc.close();
+  };
+
+  const createMeetingId = () => {
+    return database.collection("meetings").doc().id;
+  };
 
   const userVideoCamPermission = async () => {
     const constraints = {
@@ -104,10 +104,10 @@ export const useWebRTC = () => {
     }
   };
 
-  const createMeeting = async () => {
+  const createMeeting = async (id: string) => {
     await userVideoCamPermission();
 
-    const meetDocument = database.collection("meetings").doc(state.meetId);
+    const meetDocument = database.collection("meetings").doc(id);
     const offerCandidates = meetDocument.collection("offerCandidates");
     const answerCandidates = meetDocument.collection("answerCandidates");
 
@@ -149,7 +149,9 @@ export const useWebRTC = () => {
 
   const joinMeeting = async () => {
     await userVideoCamPermission();
+    console.log(state.meetId, "ssss");
     const meetDocument = database.collection("meetings").doc(state.meetId);
+    console.log("Joining meeting");
 
     const answerCandidates = meetDocument.collection("answerCandidates");
     const offerCandidates = meetDocument.collection("offerCandidates");

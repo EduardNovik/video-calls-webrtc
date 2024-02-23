@@ -22,7 +22,6 @@ interface MeetOnCallControlsProps {
   videoStreamToggleHandler: () => void;
   audioStreamToggleHandler: () => void;
   hangUpHandler: () => void;
-  onHoldToggleHandler: () => void;
   shareDesktop: () => void;
 }
 
@@ -32,7 +31,6 @@ export const CallControlButtons = forwardRef(
       videoStreamToggleHandler,
       audioStreamToggleHandler,
       hangUpHandler,
-      onHoldToggleHandler,
       shareDesktop,
     } = props;
     const { state, updateMeetState } = useMeetStore();
@@ -73,13 +71,14 @@ export const CallControlButtons = forwardRef(
     };
 
     return (
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-wrap sm:flex-nowrap justify-center">
         <CallControlButton
           iconOn={<Mic size={20} />}
           iconOff={<MicOff size={20} />}
           deviceState={state.isMicOn}
           stateField="isMicOn"
           onPressHandler={audioStreamToggleHandler}
+          customStyles="sm:min-w-unit-3xl"
         />
         <CallControlButton
           iconOn={<Video size={20} />}
@@ -87,6 +86,7 @@ export const CallControlButtons = forwardRef(
           deviceState={state.isCameraOn}
           stateField="isCameraOn"
           onPressHandler={videoStreamToggleHandler}
+          customStyles="sm:min-w-unit-3xl"
         />
         <CallControlButton
           iconOn={<Monitor size={20} />}
@@ -94,13 +94,7 @@ export const CallControlButtons = forwardRef(
           deviceState={state.isPresenting}
           stateField="isPresenting"
           onPressHandler={shareDesktop}
-        />
-        <CallControlButton
-          iconOn={<MonitorPlay size={20} />}
-          iconOff={<MonitorPause size={20} />}
-          deviceState={state.isOnHold}
-          stateField="isOnHold"
-          onPressHandler={onHoldToggleHandler}
+          customStyles="sm:min-w-unit-3xl"
         />
         <CallControlButton
           iconOn={<Minimize2 size={20} />}
@@ -110,6 +104,7 @@ export const CallControlButtons = forwardRef(
           onPressHandler={
             state.isFullScreen ? fullScreenCloseHandler : fullScreenOpenHandler
           }
+          customStyles="sm:min-w-unit-3xl"
         />
         <CallControlButton
           iconOn={<Phone size={20} />}
@@ -117,7 +112,7 @@ export const CallControlButtons = forwardRef(
           deviceState={state.isCallActive}
           stateField="isCallActive"
           onPressHandler={hangUpHandler}
-          customStyles="bg-red-800"
+          customStyles="sm:min-w-unit-3xl bg-red-800"
         />
       </div>
     );
