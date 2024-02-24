@@ -6,8 +6,14 @@ import { cn } from "../lib/cn";
 import { useMeetStore } from "../store/meet-store";
 import { useWebRTC } from "../hooks/use-web-rtc";
 import { CallControlButtons } from "./components/call-control-buttons";
+import { CallControlButtonsMobile } from "./components/call-control-buttons-mobile";
 import { useRouter } from "next/navigation";
-import { Button } from "@nextui-org/button";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Button,
+} from "@nextui-org/react";
 
 const OnCall = () => {
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
@@ -62,7 +68,6 @@ const OnCall = () => {
 
   const handleCopyClick = () => {
     navigator.clipboard.writeText(state.meetId);
-    alert("Text copied to clipboard!");
   };
 
   return (
@@ -102,7 +107,7 @@ const OnCall = () => {
           playsInline
           ref={screenShareRef}
         />
-        <div className="w-full bottom-[-200px] absolute sm:bottom-4 left-1/2 flex justify-center flex-wrap -translate-x-1/2 transform gap-4">
+        <div className="w-full bottom-[-65px] absolute sm:bottom-4 left-1/2 flex justify-center flex-wrap -translate-x-1/2 transform gap-4">
           <CallControlButtons
             ref={videoContainerRef}
             videoStreamToggleHandler={() =>
@@ -114,15 +119,31 @@ const OnCall = () => {
             hangUpHandler={hangUpHandler}
             shareDesktop={shareDesktop}
           />
+          <CallControlButtonsMobile
+            videoStreamToggleHandler={() =>
+              updateMeetState({ isCameraOn: !state.isCameraOn })
+            }
+            audioStreamToggleHandler={() =>
+              updateMeetState({ isMicOn: !state.isMicOn })
+            }
+            hangUpHandler={hangUpHandler}
+          />
         </div>
       </div>
-      <Button
-        onClick={handleCopyClick}
-        className="w-fit mb-8 bg-[#9353d3] hover:-translate-y-1 hover:scale-105 hover:bg-red-800 text-white text-md"
-        variant="shadow"
-      >
-        Copy Call ID
-      </Button>
+      <Popover placement="bottom">
+        <PopoverTrigger>
+          <Button
+            onClick={handleCopyClick}
+            className="w-fit mb-8 bg-[#9353d3] hover:scale-105 hover:bg-red-800 text-white text-md"
+            variant="shadow"
+          >
+            Copy ID
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent>
+          <div className="px-1 py-2 text-small font-bold">Call ID copied ✔</div>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 };

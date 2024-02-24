@@ -23,6 +23,7 @@ interface MeetOnCallControlsProps {
   audioStreamToggleHandler: () => void;
   hangUpHandler: () => void;
   shareDesktop: () => void;
+  wrapperStyles?: string;
 }
 
 export const CallControlButtons = forwardRef(
@@ -32,6 +33,7 @@ export const CallControlButtons = forwardRef(
       audioStreamToggleHandler,
       hangUpHandler,
       shareDesktop,
+      wrapperStyles,
     } = props;
     const { state, updateMeetState } = useMeetStore();
     const forwardedDivRef = ref as RefObject<HTMLDivElement>;
@@ -71,7 +73,7 @@ export const CallControlButtons = forwardRef(
     };
 
     return (
-      <div className="flex gap-4 flex-wrap sm:flex-nowrap justify-center">
+      <div className={`hidden sm:flex gap-4 justify-center ${wrapperStyles}`}>
         <CallControlButton
           iconOn={<Mic size={20} />}
           iconOff={<MicOff size={20} />}
