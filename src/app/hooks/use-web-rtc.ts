@@ -123,8 +123,6 @@ export const useWebRTC = () => {
       type: offerDescription.type,
     };
 
-    console.log("Creating meeting");
-    console.log(meetDocument);
     await meetDocument.set({ offer });
 
     meetDocument.onSnapshot((snapshot) => {

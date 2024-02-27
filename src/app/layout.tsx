@@ -4,15 +4,12 @@ import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import { ThemeSwitcher } from "./components/theme-switcher";
 import { cn } from "./lib/cn";
-import { useTheme } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const { theme } = useTheme();
-  console.log(theme);
 
   return (
     <html lang="en" className="dark">
