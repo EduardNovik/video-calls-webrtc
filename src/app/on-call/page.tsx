@@ -71,7 +71,7 @@ const OnCall = () => {
   };
 
   return (
-    <div className="h-full w-full pt-20 gap-8">
+    <div className="h-full w-full pt-20 gap-16 flex flex-col  ">
       <div
         className="relative flex 2xl:justify-center mb-4"
         ref={videoContainerRef}
@@ -130,20 +130,24 @@ const OnCall = () => {
           />
         </div>
       </div>
-      <Popover placement="bottom">
-        <PopoverTrigger>
-          <Button
-            onClick={handleCopyClick}
-            className="w-fit mb-8 bg-[#9353d3] hover:scale-105 hover:bg-red-800 text-white text-md"
-            variant="shadow"
-          >
-            Copy ID
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <div className="px-1 py-2 text-small font-bold">Call ID copied ✔</div>
-        </PopoverContent>
-      </Popover>
+      <div className="w-full sm:justify-start justify-center flex">
+        <Popover placement="bottom">
+          <PopoverTrigger>
+            <Button
+              onClick={handleCopyClick}
+              className="w-fit mb-8 bg-[#9353d3] hover:scale-105 hover:bg-red-800 text-white text-md"
+              variant="shadow"
+            >
+              Copy ID
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className="px-1 py-2 text-small font-bold">
+              Call ID copied ✔
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
     </div>
   );
 };
