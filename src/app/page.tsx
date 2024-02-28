@@ -25,7 +25,7 @@ export default function Home() {
     });
     await createMeeting(createdMeetingId);
     router.push("/on-call");
-    console.log("passed");
+    console.log("call passed");
   };
 
   const joinMeetingHandler = async () => {
